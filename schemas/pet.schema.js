@@ -3,7 +3,7 @@ const Joi = require('joi');
 const id = Joi.number().integer();
 const age =Joi.number();
 const name = Joi.string().min(3).max(30);
-const userId = Joi.number().integer();
+const user_id = Joi.number().integer();
 
 
 const getPetSchema = Joi.object({
@@ -13,7 +13,7 @@ const getPetSchema = Joi.object({
 const createPetSchema = Joi.object({
   name: name.required(),
   age: age.required(),
-  userId: userId.required()
+  user_id: user_id.required()
 
 });
 

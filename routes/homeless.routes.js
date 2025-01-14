@@ -1,85 +1,87 @@
-// const express = require('express');
+const express = require('express');
 
-// const {PetService} = require('../services/pets.service');
+const {HomelessService} = require('../services/homeless.service');
+const validatorHandler = require('../middlewares/validator.handler');
+const {UserService} = require('../services/user.service');
+const {
+  createHomelessSchema,
+  getHomelessSchema,
+  updateHomelessSchema,
+  adopt,
+} = require('../schemas/homeless.schema');
 
-// const {
-//   createPetSchema,
-//   getPetSchema,
-//   updatePetSchema,
-// } = require('../schemas/pet.schema');
+const router = express.Router();
+const Uservice = new UserService();
+const Hservice = new HomelessService();
 
-// const router = express.Router();
-// const Pservice = new PetService();
+router.get('/',  async (req, res, next) => {
+  try {
+    const respuesta = await Hservice.getAllHomeless()
+    res.status(respuesta.statusCode).json(respuesta);
+  } catch (error) {
+    console.error(error.message)
+    next(error);
+  }
+});
 
-// router.get('/',  async (req, res, next) => {
-//   try {
-//     const respuesta = await Pservice.getAllPets()
-//     res.status(respuesta.statusCode).json(respuesta);
-//   } catch (error) {
-//     console.error(error.message)
-//     next(error);
-//   }
-// });
+router.post('/',
+  validatorHandler(createHomelessSchema, 'body'),
+  async (req, res, next) => {
+    try {
+      const body = req.body;
+      console.log(body)
+      const respuesta = await Hservice.createHomeless(body)
+      res.status(respuesta.statusCode).json(respuesta);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
 
-// router.get('/tuyos/:id',  async (req, res, next) => {
-//   try {console.log(req)
-//     const respuesta = await Pservice.getUserPets(req.params.id)
-//     res.status(respuesta.statusCode).json(respuesta);
-//   } catch (error) {
-//     console.error(error.message)
-//     next(error);
-//   }
-// });
+router.post('/adopt',
+  // lo q se valida desde schema, de donde se obtiene la info (body o params)
+  validatorHandler(adopt, 'body'),
+  async (req, res, next) => {
+    try {
+      const name= req.body.name;
+      const user_id = req.body.user_id;
+      const homelessId = req.body.homelessId;
+      const respuesta = await Hservice.adoptHomeless(user_id, homelessId, name)
+      res.status(respuesta.statusCode).json(respuesta);
 
-// // router.get('/cuantos',  async (req, res, next) => {
-// //   try {console.log(req)
-// //     res.json(await Pservice.getUserPets(req.));
-// //   } catch (error) {
-// //     console.error(error.message)
-// //     next(error);
-// //   }
-// // });
 
-// router.post('/',
-//   validatorHandler(createPetSchema, 'body'),
-//   async (req, res, next) => {
-//     try {
-//       const body = req.body;
-//       console.log(body)
-//       const respuesta = await Pservice.createPet(body)
-//       res.status(respuesta.statusCode).json(respuesta);
-//     } catch (error) {
-//       next(error);
-//     }
-//   }
-// );
+    } catch (error) {
+      next(error);
+    }
+  }
+);
 
-// router.patch('/:id',
+router.patch('/:id',
 
-//   async (req, res, next) => {
-//     try {
-//       const { id } = req.params;
-//       const body = req.body;
-//       //result almacena el resultado del metodo update que usamos
-//       //para actualizar
-//       const result = await Pservice.updateOnePet(id, body);
-//       res.status(result.statusCode).json(result);
-//     } catch (error) {
-//       next(error);
-//     }
-//   }
-// );
+  async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const body = req.body;
+      //result almacena el resultado del metodo update que usamos
+      //para actualizar
+      const result = await Hservice.updateOneHomeless(id, body);
+      res.status(result.statusCode).json(result);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
 
-// router.delete('/:id',
-//   async (req, res, next) => {
-//     try {
-//       const { id } = req.params;
-//       const respuesta = await Pservice.deletePet(id);
-//       res.status(respuesta.statusCode).json(respuesta);
-//     } catch (error) {
-//       next(error);
-//     }
-//   }
-// );
+router.delete('/:id',
+  async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const respuesta = await Hservice.deleteHomeless(id);
+      res.status(respuesta.statusCode).json(respuesta);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
 
-// module.exports = router;
+module.exports = router;

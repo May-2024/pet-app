@@ -1,5 +1,5 @@
 const { Model, DataTypes, Sequelize } = require('sequelize');
-const {USER_TABLE} =require('./users.model')
+const { USER_TABLE } = require('./users.model');
 
 const PET_TABLE = 'pets';
 
@@ -8,7 +8,7 @@ const PetSchema = {
     allowNull: false,
     autoIncrement: true,
     primaryKey: true,
-    type: DataTypes.INTEGER
+    type: DataTypes.INTEGER,
   },
   name: {
     allowNull: false,
@@ -19,25 +19,23 @@ const PetSchema = {
     type: DataTypes.INTEGER,
   },
 
-  userId: {
+  user_id: {
     field: 'user_id',
     allowNull: false,
     type: DataTypes.INTEGER,
     references: {
       model: USER_TABLE,
-      key: 'id'
+      key: 'id',
     },
 
     onUpdate: 'CASCADE',
-    onDelete: 'CASCADE'
-  }
-
-}
+    onDelete: 'CASCADE',
+  },
+};
 
 class Pet extends Model {
-
   static associate(models) {
-    this.belongsTo(models.User, {as: 'user'});
+    this.belongsTo(models.User, { as: 'user', foreignKey: 'user_id' });
   }
 
   static config(sequelize) {
@@ -46,7 +44,7 @@ class Pet extends Model {
       tableName: PET_TABLE,
       modelName: 'Pet',
       timestamps: false,
-    }
+    };
   }
 }
 

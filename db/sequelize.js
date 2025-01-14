@@ -7,6 +7,7 @@ const sequelize = new Sequelize(infoBd.dbName, infoBd.dbUser, infoBd.dbPassword,
   port: infoBd.port,
   dialect: 'postgres',
   logging: true, // Cambiar a 'console.log' si necesitas ver las consultas ejecutadas
+  underscored: true,
 });
 
 // Probar la conexión

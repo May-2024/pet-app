@@ -3,6 +3,8 @@ const express = require('express');
 
 const usersRouter = require('./users.routes');
 const petsRouter = require('./pets.routes');
+const homelessRouter = require('./homeless.routes');
+
 
 
 function routerApi(app) {
@@ -17,6 +19,11 @@ function routerApi(app) {
   router.use('/users', usersRouter);
 
   router.use('/pets', petsRouter);
+
+  router.use('/homeless', homelessRouter);
+
+
+
 
 
 }

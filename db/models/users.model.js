@@ -39,7 +39,7 @@ class User extends Model {
   static associate(models) {
     this.hasMany(models.Pet,{
       as: 'pets',
-      foreignKey: 'userId'
+      foreignKey: 'user_id'
     });
   }
 

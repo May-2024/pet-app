@@ -34,6 +34,11 @@ const HomelessSchema = {
   contacto: {
     allowNull: false,
     type: DataTypes.STRING(255),
+  },
+
+  adopt: {
+    allowNull: false,
+    type: DataTypes.BOOLEAN
   }
 
 }

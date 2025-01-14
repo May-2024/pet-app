@@ -1,3 +1,3 @@
-# pet-my-scroto
+# pet-app
 
 Prueba documentation
