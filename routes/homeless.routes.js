@@ -8,13 +8,16 @@ const {
   getHomelessSchema,
   updateHomelessSchema,
   adopt,
+  filterHomelessSchema,
 } = require('../schemas/homeless.schema');
 
 const router = express.Router();
 const Uservice = new UserService();
 const Hservice = new HomelessService();
 
-router.get('/',  async (req, res, next) => {
+router.get('/',
+
+  async (req, res, next) => {
   try {
     const respuesta = await Hservice.getAllHomeless()
     res.status(respuesta.statusCode).json(respuesta);
@@ -23,6 +26,22 @@ router.get('/',  async (req, res, next) => {
     next(error);
   }
 });
+
+
+router.get('/filter/:typeAnimal',
+  // validatorHandler(filterHomelessSchema, 'body'),
+  async (req, res, next) => {
+  try {
+    console.log(req.params)
+    const {typeAnimal} = req.params
+    const respuesta = await Hservice.getFilterHomeless(typeAnimal)
+    res.status(respuesta.statusCode).json(respuesta);
+  } catch (error) {
+    console.error(error.message)
+    next(error);
+  }
+});
+
 
 router.post('/',
   validatorHandler(createHomelessSchema, 'body'),
