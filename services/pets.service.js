@@ -58,7 +58,7 @@ class PetService {
         }
       }
       return {
-        statusCode: 200,
+        statusCode: 201,
         message:`La mascota fue creado exitosamente.`
       };
 
