@@ -22,6 +22,28 @@ class HomelessService {
     }
   }
 
+  async getFilterHomeless(typeAnimal) {
+    try {
+      const rta = await Homeless.findAll({
+
+        where:{
+          animal:typeAnimal
+        }
+      });
+      return {
+        statusCode: 200,
+        message: "Mascotas obtenidas exitosamente",
+        data: rta
+      };
+    } catch (error) {
+      console.error(error.message)
+      return {
+        statusCode: 500,
+        message: `Ha ocurrido un error desconocido.`
+      }
+    }
+  }
+
 
   async createHomeless(data) {
     try {

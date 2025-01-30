@@ -22,6 +22,10 @@ const getHomelessSchema = Joi.object({
   id: id.required(),
 });
 
+const filterHomelessSchema = Joi.object({
+  typeAnimal: Joi.string().min(3).required(),
+});
+
 const createHomelessSchema = Joi.object({
 
   age: age.required(),
@@ -36,4 +40,4 @@ const updateHomelessSchema = Joi.object({
   status_adopted,
 });
 
-module.exports = { getHomelessSchema, createHomelessSchema, updateHomelessSchema, adopt };
+module.exports = { getHomelessSchema, createHomelessSchema, updateHomelessSchema, adopt, filterHomelessSchema };
