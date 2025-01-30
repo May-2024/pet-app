@@ -25,6 +25,7 @@ class HomelessService {
 
   async createHomeless(data) {
     try {
+      data.adopt = false;
       const newHomeless = await Homeless.create(data);
       if (!newHomeless){
         return {
@@ -33,7 +34,7 @@ class HomelessService {
         }
       }
       return {
-        statusCode: 200,
+        statusCode: 201,
         message:`La mascota fue creado exitosamente.`
       };
 

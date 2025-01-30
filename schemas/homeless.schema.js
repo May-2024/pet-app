@@ -3,7 +3,6 @@ const { Homeless } = require('../db/models/homeless.model');
 
 const id = Joi.number().integer();
 const age =Joi.number();
-const name = Joi.string().min(3).max(30);
 const animal = Joi.string().min(3).max(30);
 const gender = Joi.string().min(3).max(30);
 const ubicacion = Joi.string().min(3).max(30);
@@ -15,7 +14,7 @@ const status_adopted = Joi.boolean();
 const adopt = Joi.object({
   homelessId: Joi.number().required().min(1),
   user_id: Joi.number().required().min(1),
-  name: name
+  
 
 })
 
@@ -24,7 +23,7 @@ const getHomelessSchema = Joi.object({
 });
 
 const createHomelessSchema = Joi.object({
-  name: name.required(),
+
   age: age.required(),
   animal: animal.required(),
   gender: gender.required(),

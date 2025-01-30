@@ -89,7 +89,7 @@ class UserService {
         }
       }
       return {
-        statusCode: 200,
+        statusCode: 201,
         message:`El usuario fue creado exitosamente.`
       };
 
