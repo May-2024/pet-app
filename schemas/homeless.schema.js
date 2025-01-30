@@ -14,7 +14,7 @@ const status_adopted = Joi.boolean();
 const adopt = Joi.object({
   homelessId: Joi.number().required().min(1),
   user_id: Joi.number().required().min(1),
-  
+
 
 })
 
